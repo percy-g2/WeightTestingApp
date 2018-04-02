@@ -41,8 +41,8 @@ public class Application extends android.app.Application {
 		if (mSerialPort == null) {
 			header_name = PreferenceManager.getDefaultSharedPreferences(context);
 			/* Read serial port parameters */
-			String path = "/dev/ttyS2";
-			int baudrate = 9600;
+			String path = header_name.getString("baud_rate", "/dev/ttyS2");
+			int baudrate = header_name.getInt("port", 9600);
 
 			/* Check parameters */
 			if ( (path.length() == 0) || (baudrate == -1)) {

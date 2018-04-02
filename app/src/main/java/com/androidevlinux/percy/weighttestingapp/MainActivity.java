@@ -1,6 +1,8 @@
 package com.androidevlinux.percy.weighttestingapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,7 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import android_serialport_api.sample.SerialPortConnection;
 import android_serialport_api.sample.SerialPortListener;
@@ -16,16 +21,34 @@ public class MainActivity extends AppCompatActivity implements SerialPortListene
 
     public static String weight = "0";
     SerialPortConnection serialPortConnection;
+    SharedPreferences header_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        final EditText port = findViewById(R.id.port);
+        final EditText baud_rate = findViewById(R.id.baud_rate);
+        Button btnSet = findViewById(R.id.btnSet);
+        Button btnGet = findViewById(R.id.btnGet);
+        header_name = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        btnSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!port.getText().toString().isEmpty() && !baud_rate.getText().toString().isEmpty()) {
+                    header_name.edit().putString("baud_rate", baud_rate.getText().toString()).apply();
+                    header_name.edit().putInt("port", Integer.parseInt(port.getText().toString())).apply();
+                } else {
+                    Toast.makeText(MainActivity.this, "Empty field", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         setSupportActionBar(toolbar);
         serialPortConnection = SerialPortConnection.onConnect(MainActivity.this);
-        FloatingActionButton fab = findViewById(R.id.fab);
         final TextView txtWeight = findViewById(R.id.txtWeight);
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnGet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 txtWeight.setText(weight);

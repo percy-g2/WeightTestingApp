@@ -8,6 +8,42 @@
     tools:context="com.androidevlinux.percy.weighttestingapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <EditText
+        android:id="@+id/port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="/dev/ttyS2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/baud_rate"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/baud_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="9600"
+        app:layout_constraintStart_toEndOf="@+id/port"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginStart="48dp"
+        android:text="SET"
+        app:layout_constraintStart_toEndOf="@+id/port"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnGet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="136dp"
+        android:layout_marginStart="136dp"
+        android:text="GET"
+        app:layout_constraintStart_toEndOf="@+id/port"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/txtWeight"
         android:layout_width="wrap_content"
